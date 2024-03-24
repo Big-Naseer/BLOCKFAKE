@@ -32,38 +32,38 @@ export const addDrug = async (req, res) => {
     }
 };
 
-// export const updateDrug = async (req, res) => {
-//     const id = req.params.id;
-//     try {
-//         const existingDrug = await Drugs.findById(id);
+export const updateDrug = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const existingDrug = await Drugs.findById(id);
 
-//         if (!existingDrug) {
-//             return res.status(404).json({message: 'Drug not found'});
-//         }
+        if (!existingDrug) {
+            return res.status(404).json({message: 'Drug not found'});
+        }
 
-//         const{} = req.body;
-//         if (tittle != undefined){
+        const{} = req.body;
+        if (tittle != undefined){
 
-//         }
-//     console.log('Updating user with ID:',id);
+        }
+    console.log('Updating user with ID:',id);
 
-//     //  creating the function for updating
-//     const updatedDrug = await Drugs.findByIdAndUpdate(id,
-//         { $set: req.body},
-//         {new: true});
+    //  creating the function for updating
+    const updatedDrug = await Drugs.findByIdAndUpdate(id,
+        { $set: req.body},
+        {new: true});
 
-//         console.log('Updated Drug:',updateDrug);
+        console.log('Updated Drug:',updateDrug);
 
-//         res.status(200).json({
-//             success: true,
-//             message: 'Updated Successfully',
-//             data: updateDrug,
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({
-//             success: false,
-//             message: 'Failed to update User'
-//         });
-//     }
-// };
+        res.status(200).json({
+            success: true,
+            message: 'Updated Successfully',
+            data: updateDrug,
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to update User'
+        });
+    }
+};
