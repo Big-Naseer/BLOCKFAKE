@@ -18,9 +18,9 @@ export const addDrug = async (req, res) => {
         const savedDrug = await newDrug.save();
 
         // saved the DrugId into a Qrcode
-        const qrCodeData = JSON.stringify(savedDrug.drugId);
-        const qrCodeImage = await qrcode.toDataURL(qrCodeData);
-        console.log(qrCodeData)
+        // const qrCodeData = JSON.stringify(savedDrug.drugId);
+        const qrCodeImage = await qrcode.toDataURL(savedDrug.drugId);
+        console.log(qrCodeImage)
         
         savedDrug.qrcode = qrCodeImage; 
         await savedDrug.save();
