@@ -22,7 +22,11 @@ export const addDrug = async (req, res) => {
         // saved the DrugId into a Qrcode
         // const qrCodeData = JSON.stringify(savedDrug.drugId);
         const qrCodeImage = await qrcode.toDataURL(savedDrug.drugId);
+<<<<<<< HEAD
         // console.log(qrCodeData)
+=======
+        console.log(qrCodeImage)
+>>>>>>> c44a0684d3133ee45279548622ed50663ecaf8fd
         
         savedDrug.qrcode = qrCodeImage; 
         await savedDrug.save();
@@ -35,7 +39,11 @@ export const addDrug = async (req, res) => {
 };
 
 export const updateDrug = async (req, res) => {
+<<<<<<< HEAD
     const id = req.params.nafdacReg;
+=======
+    const id = req.params.id;
+>>>>>>> c44a0684d3133ee45279548622ed50663ecaf8fd
     try {
         const existingDrug = await Drugs.findById(id);
 
