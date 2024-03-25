@@ -43,7 +43,7 @@ const drugSchema = new Schema(
 // Middleware to convert string to date before saving
 drugSchema.pre('save', function(next) {
     // Use a combination of drugName, Date.now(), and a random string for drugId
-    this.drugId = `${this.drugName}_${Date.now()}`;
+    // this.drugId = `${this.drugName}_${Date.now()}`;
     this.manufacturedDate = new Date(this.manufacturedDate);
     this.expiryDate = new Date(this.expiryDate);
     next();
