@@ -36,7 +36,7 @@ const drugSchema = new Schema(
         }
     },
     {
-        timestamps: true
+        timestamps: true,
     }
 );
 
