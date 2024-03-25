@@ -13,20 +13,19 @@ export const addDrug = async (req, res) => {
         if(existingDrug){
             return res.status(409).json({success: false, message: "Drug existing already"});
         }
+
+         // Concatenate drugName with current timestamp
+
+        const drugId = drugName + Date.now();
         //  Saving the new drug
-        let id = newDrug.drugName + 12;
-        id = newDrug
-        const newDrug = new Drugs(req.body);
-        const savedDrug = await newDrug.save();
+        
+        const newDrug = new Drugs({drugName,drugId,manufacturedDate,manufacturer,expiryDate,nafdacReg,component});
+
+        await newDrug.save();
 
         // saved the DrugId into a Qrcode
-        // const qrCodeData = JSON.stringify(savedDrug.drugId);
-        const qrCodeImage = await qrcode.toDataURL(savedDrug.drugId);
-<<<<<<< HEAD
+        const qrCodeImage = await qrcode.toDataURL(drugId);
         // console.log(qrCodeData)
-=======
-        console.log(qrCodeImage)
->>>>>>> c44a0684d3133ee45279548622ed50663ecaf8fd
         
         savedDrug.qrcode = qrCodeImage; 
         await savedDrug.save();
@@ -34,16 +33,12 @@ export const addDrug = async (req, res) => {
         res.status(201).json(savedDrug);
 
     } catch (error) {
-        res.status(400).jsonrs({message: error.message });
+        res.status(400).json({message: error.message });
     }
 };
 
 export const updateDrug = async (req, res) => {
-<<<<<<< HEAD
     const id = req.params.nafdacReg;
-=======
-    const id = req.params.id;
->>>>>>> c44a0684d3133ee45279548622ed50663ecaf8fd
     try {
         const existingDrug = await Drugs.findById(id);
 
