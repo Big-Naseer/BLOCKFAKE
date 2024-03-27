@@ -5,35 +5,72 @@ import { nanoid } from 'nanoid';
 const ID = nanoid();
 
 // function for adding drugs
+// export const addDrug = async (req, res) => {
+//     try {
+//         const existingDrug = await Drugs.findOne({nafdacReg:req.body.nafdacReg})
+//         console.log(existingDrug)
+        
+//         if(existingDrug){
+//             return res.status(409).json({success: false, message: "Drug existing already"});
+//         }
+//         //  Saving the new drug
+//         const newDrug = new Drugs(req.body);
+//         const savedDrug = await newDrug.save();
+
+//         // saved the DrugId into a Qrcode
+
+//         const qrCodeData = JSON.stringify(savedDrug.drugId);
+//         const qrCodeImage = await qrcode.toDataURL(savedDrug.drugId);
+//         // console.log(qrCodeData)
+        
+//         savedDrug.qrcode = qrCodeImage; 
+//         await savedDrug.save();
+
+//         res.status(201).json(savedDrug);
+
+//     } catch (error) {
+//         res.status(400).json({message: error.message });
+//     }
+// };
+
 export const addDrug = async (req, res) => {
     try {
-        const existingDrug = await Drugs.findOne({nafdacReg:req.body.nafdacReg})
-        console.log(existingDrug)
-        
-        if(existingDrug){
-            return res.status(409).json({success: false, message: "Drug existing already"});
+        const { drugName, manufacturedDate, manufacturer, expiryDate, nafdacReg, component } = req.body;
+
+        // Check if a drug with the provided nafdacReg already exists
+        const existingDrug = await Drugs.findOne({ nafdacReg });
+
+        if (existingDrug) {
+            return res.status(409).json({ success: false, message: "Drug already exists." });
         }
 
-         // Concatenate drugName with current timestamp
-
+        // Concatenate drugName with current timestamp to generate drugId
         const drugId = drugName + Date.now();
-        //  Saving the new drug
-        
-        const newDrug = new Drugs({drugName,drugId,manufacturedDate,manufacturer,expiryDate,nafdacReg,component});
 
-        await newDrug.save();
+        // Create a new drug instance
+        const newDrug = new Drugs({
+            drugName,
+            drugId,
+            manufacturedDate,
+            manufacturer,
+            expiryDate,
+            nafdacReg,
+            component
+        });
 
-        // saved the DrugId into a Qrcode
+        // Save the new drug to the database
+        const savedDrug = await newDrug.save();
+
+        // Generate QR code for drugId
         const qrCodeImage = await qrcode.toDataURL(drugId);
-        // console.log(qrCodeData)
-        
-        savedDrug.qrcode = qrCodeImage; 
+
+        // Update the drug instance with the generated QR code
+        savedDrug.qrcode = qrCodeImage;
         await savedDrug.save();
 
         res.status(201).json(savedDrug);
-
     } catch (error) {
-        res.status(400).json({message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };
 
