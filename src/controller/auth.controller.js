@@ -1,7 +1,7 @@
-import Admin from "../model/admin.model";
+import Admin from "../model/admin.model.js";
 import { createHash } from "crypto";
-import { loginValidator } from "../validator/admin.validator";
-import { formatZodError } from "../utils/errorMessage";
+import { loginValidator } from "../validator/admin.validator.js";
+import { formatZodError } from "../utils/errorMessage.js";
 
 export const adminLogin = async (res, req) => {
 
